@@ -53,6 +53,10 @@
     list-style-type: none;
     padding: 30px;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     max-width: 1000px;
     margin-bottom: 30px;
   }
@@ -81,16 +85,36 @@
 <main class="main" id="indice">
     <h1>{{title()}}</h1>
 
-  <div class="indice">
-    <ol type="1">
-      <li><a href="#Ejercicio1">Ejercicio 1</a></li>
-    </ol>
-  </div>
-
   <div class="Ejercicio" id="Ejercicio1">
-       <h1>Direccion: {{ Direccion. }}</h1>
+       @for(alumno of getAlumnos(); track alumno){
+        <div class="caja">
+          <h2 class="titulo">
+            {{alumno.nombre}}
+            <img class="imagen" src="https://cdn-icons-png.flaticon.com/512/6676/6676023.png" width="30px"/>
+          </h2>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Asignatura</th>
+                <th>Descripcion Asig.</th>
+                <th>Num. horas</th>
+                <th>Profesor imparte</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(item of getMatriculaByAlumno(alumno.dni); track item){
+                <tr>
+                  <td>{{item.asignatura.nombre }}</td>
+                  <td>{{item.asignatura.descripcion}}</td>
+                  <td>{{item.asignatura.numHoras}}</td>
+                  <td>{{item.asignatura.profesor.nombre}}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
   </div>
-
 
     <footer>
       <a href="#indice">Volver al indice</a>
